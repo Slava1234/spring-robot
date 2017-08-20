@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--дефолтные методы инициализации и уничножения объектов прописывается в bean-->
+<!--при линивой инициализации выставленной в true объекты будут создаваться при их явном вызове-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-init-method="initObject"
+       default-destroy-method="destroyObject"
+       default-lazy-init="true"
+>
+
+    <import resource="toshiba_context.xml" />
+    <import resource="sony_context.xml" />
+    
+    <!--по умолчанию для инициализации объектов в области видимости scope используется singletone-->
+    <bean id="t1000" class="ru.javabegin.training.spring.impls.robot.ModelT1000"
+          p:hand-ref="sonyHand"
+          p:leg-ref="toshibaLeg"
+          p:head-ref="toshibaHead"
+          scope="prototype"
+          init-method="initObject"
+          destroy-method="destroyObject"
+    >
+        <!--можно передавать свойства через неймспейс p так как выше-->
+        
+        
+        <!-- Передача аргументов в конструктор -->
+        <!--<constructor-arg ref="sonyHand"/>
+        <constructor-arg ref="toshibaLeg"/>
+        <constructor-arg ref="sonyHead"/>-->
+         
+        <!--ref для передачи объектов; value для передачи примитивных типов -->
+        <!--index ставится для того что бы можно было ставить аргументы не по порядку-->
+        <!--type указывается для явного наглядного указания типа данных-->
+        <constructor-arg value="silver" index="0" type="String" />
+        <constructor-arg value="2006" index="1" type="int" />
+        <constructor-arg value="true" index="2" type="boolean" />
+         
+        <!--используется сеттерами-->    
+        <!--<property name="hand" ref="toshibaHand" />
+        <property name="head" ref="toshibaHead" />
+        <property name="leg" ref="toshibaLeg" />-->
+        
+    </bean>
+
+    <bean id="t1000Empty" class="ru.javabegin.training.spring.impls.robot.ModelT1000">
+        <constructor-arg ref="toshibaHand" />
+        <constructor-arg ref="sonyLeg" />
+        <constructor-arg ref="sonyHead" />
+    </bean>
+
+</beans>
